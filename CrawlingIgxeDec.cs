@@ -38,7 +38,7 @@ namespace CrawlingDecInfoCMD
                 string img_dec = item.SelectSingleNode(xpath + "//div[@class='img']").SelectSingleNode(xpath + "//img").Attributes["src"].Value;
                 string txt = "饰品:" + name_dec + ",磨损度：" + label_dec + ",价格：" + price_dec + ",在售数量：" + count_dec + ",图片地址：" + img_dec;
                 Console.WriteLine(txt);
-                doIO.WriteTxt(txt);
+                doIO.WriteTxt(txt,"..\\..\\..\\bin\\data\\dec.txt");
             }
         }
     }
