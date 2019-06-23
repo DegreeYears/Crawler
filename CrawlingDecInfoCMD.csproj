@@ -15,4 +15,8 @@
     <PackageReference Include="NUnit" Version="3.12.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="bin\data\img\" />
+  </ItemGroup>
+
 </Project>
