@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
 using NUnit.Framework;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -11,9 +13,43 @@ namespace CrawlingDecInfoCMD
     {
         static void Main(string[] args)
         {
+            //insert into database
+            var doIO = new DoIO();
+            var list_dec = new List<string>();
+            list_dec = doIO.ReadTxt2(@"..\..\..\bin\data\dec3.txt");
+            var dbHelper = new DBHelper();
+            var hstList = new List<Hashtable>();
+            foreach (var item in list_dec)
+            {
+                try
+                {
+                    var hs = new Hashtable();
+                    var list_info = new List<string>();
+                    var arr_info = item.Split(',');
+                    var arr_decName = arr_info[0].Substring(3).Split(',', '|');
+                    hs.Add("DecName_CN", arr_info[0].Substring(3));
+                    hs.Add("Wear", arr_info[1].Substring(4));
+                    hs.Add("Type", arr_decName[0]);
+                    hs.Add("Image", arr_info[4].Substring(38));
+                    hs.Add("DecPrice_CSGOID", 1);
+                    hstList.Add(hs);
+                    Console.WriteLine(list_dec.IndexOf(item));
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(list_dec.IndexOf(item)+" -> error!");
+                }
+            }
+
+            dbHelper.InsertData(hstList);
+
             //在线图片下载
-            ImgDownload imgDownload = new ImgDownload();
-            imgDownload.SaveImageForWeb();
+            /*
+            DoIO doIO = new DoIO();
+            doIO.SaveHttpImg(@"..\..\..\bin\data\dec2.txt");
+            */
+            
             //数据处理执行程序
             /*
             DataAccess dataAccess = new DataAccess();
